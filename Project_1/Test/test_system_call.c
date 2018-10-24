@@ -15,7 +15,6 @@ long sys_caller( int flag ){
 int main(int argc, char** argv){
 	long return_value = -5;
 	int flag = atoi(argv[1]);
-	printf("AHA FLAG %d\n",flag);
 	return_value = sys_caller(flag);
 
 	if(return_value == 0){
