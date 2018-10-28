@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sys/resource.h>
 #include <string.h>
+#include <errno.h>
 #define NR_setflag 355
 
 int which = PRIO_PROCESS;
@@ -26,7 +27,7 @@ void check_if_test_successful(int flag,int nice,int fork_value){
 
 int main( int argc, char** argv ){
 	if ( argc < 2 || argc > 4 ){
-		printf("%s\n", "You should give me exactly 1 command-line parameters!\n\
+		printf("%s\n", "You should give me exactly 2 command-line parameters!\n\
 Program will be terminated.");
 		return 0;
 	}
@@ -43,7 +44,7 @@ Program will be terminated.");
 	if(systemcall_return == 0){
 		printf("System call works without error.\n");
 	}else{
-		printf("Error is :  %s\n", strerror(systemcall_return));
+		printf("Error is :  %s\n", strerror(errno));
 		return;
 	}
 	getchar();	
@@ -55,7 +56,7 @@ Program will be terminated.");
 		check_if_test_successful(flag,nice_val,fork_value);
 		getchar();
 	}else if (fork_value == -1){ // Fork error so parent process
-		printf("There was a fork error %s \nParent process pid:%d ppid:%d\n",strerror(fork_value),pid,p_pid);
+		printf("There was a fork error %s \nParent process pid:%d ppid:%d\n",strerror(errno),pid,p_pid);
 		check_if_test_successful(flag,nice_val,fork_value);
 		getchar();
 	}else{ // Parent process
